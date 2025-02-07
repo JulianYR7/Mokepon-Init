@@ -86,17 +86,28 @@ function ataqueAleatorioEnemigo(){
     let ataqueAleatorio = aleatorio(1,3)
 
     if (ataqueAleatorio == 1){
-        ataqueEnemigo = "Fuego"
+        ataqueEnemigo = "Fuego";
         console.log(ataqueEnemigo);        
     }
     else if (ataqueAleatorio == 2){
-        ataqueEnemigo = "Agua"
+        ataqueEnemigo = "Agua";
         console.log(ataqueEnemigo);        
     }
     else if (ataqueAleatorio == 3){
-        ataqueEnemigo = "Tierra"
+        ataqueEnemigo = "Tierra";
         console.log(ataqueEnemigo);        
     }
+
+    crearMensaje();
+
+}
+
+function crearMensaje(){
+
+    const seccionMensajes = document.getElementById('mensajes');
+    let parrafo = document.createElement('p');
+    parrafo.innerHTML = `Tu atacó con ${ataqueJugador}, la mascota del enemigo atacó con ${ataqueEnemigo} - Pendiente`;
+    seccionMensajes.appendChild(parrafo)
 
 }
 
