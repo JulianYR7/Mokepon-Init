@@ -3,7 +3,10 @@
 let ataqueJugador;
 let ataqueEnemigo;
 
+let resultadoCombate;
+
 let mascotas = ["Hipodoge", "Capipepo", "Ratigueya"];
+let ataques = ["🔥", "💧", "🌱"];
 
 let btnClicked;
 
@@ -12,15 +15,15 @@ function iniciarJuego(){ // Inicio del juego y variables principales
     botonMascotaJugador.addEventListener('click', seleccionarMascotaJugador);
 
     const btnFuego = document.getElementById('botonFuego').addEventListener('click', () => {
-        btnClicked = "fuego";
+        btnClicked = 0;
         ataque();
     });
     const btnAgua = document.getElementById('botonAgua').addEventListener('click', () => {
-        btnClicked = "agua";
+        btnClicked = 1;
         ataque();
     });
     const btnTierra = document.getElementById('botonTierra').addEventListener('click', () => {
-        btnClicked = "tierra";
+        btnClicked = 2;
         ataque();
     });
 
@@ -63,50 +66,61 @@ function seleccionarMascotaEnemigo(){
 
 }
 
+// Logica de combate
 function ataque(){
 
-    if (btnClicked == "fuego"){
-        ataqueJugador = "Fuego";
+    if (btnClicked == 0){
+        ataqueJugador = ataques[btnClicked];
         alert('🔥🔥🔥');
     } 
-    else if (btnClicked == "agua"){
-        ataqueJugador = "Agua";
+    else if (btnClicked == 1){
+        ataqueJugador = ataques[btnClicked];
         alert('💧💧💧');
     }
-    else if (btnClicked == "tierra"){
-        ataqueJugador = "Tierra";
-        alert('🌱🌱🌱');
+    else if (btnClicked == 2){
+        ataqueJugador = ataques[btnClicked];
+        alert("🌱🌱🌱");
     }
+
     ataqueAleatorioEnemigo();
 
 }
 
 function ataqueAleatorioEnemigo(){
 
-    let ataqueAleatorio = aleatorio(1,3)
+    let ataqueAleatorio = aleatorio(0,2);
+    ataqueEnemigo = ataques[ataqueAleatorio];
 
-    if (ataqueAleatorio == 1){
-        ataqueEnemigo = "Fuego";
-        console.log(ataqueEnemigo);        
+    combate();
+
+}
+
+function combate(){
+
+    if (ataqueJugador == ataqueEnemigo){
+        resultadoCombate = "Empate";
     }
-    else if (ataqueAleatorio == 2){
-        ataqueEnemigo = "Agua";
-        console.log(ataqueEnemigo);        
+    else if (
+        ataqueJugador == ataques[0] && ataqueEnemigo == ataques[2] ||
+        ataqueJugador == ataques[1] && ataqueEnemigo == ataques[0] ||
+        ataqueJugador == ataques[2] && ataqueEnemigo == ataques[1]
+    ){
+        resultadoCombate = "Ganaste 🎊";
     }
-    else if (ataqueAleatorio == 3){
-        ataqueEnemigo = "Tierra";
-        console.log(ataqueEnemigo);        
+    else {
+        resultadoCombate = "Perdiste 😢"
     }
 
     crearMensaje();
 
 }
 
+// Logica Visual extra
 function crearMensaje(){
 
     const seccionMensajes = document.getElementById('mensajes');
     let parrafo = document.createElement('p');
-    parrafo.innerHTML = `Tu atacó con ${ataqueJugador}, la mascota del enemigo atacó con ${ataqueEnemigo} - Pendiente`;
+    parrafo.innerHTML = `Tu atacó con ${ataqueJugador}, la mascota del enemigo atacó con ${ataqueEnemigo} - ${resultadoCombate}`;
     seccionMensajes.appendChild(parrafo)
 
 }
